@@ -1,0 +1,206 @@
+<!doctype html>
+<html>
+    <head>
+ <meta charset="utf-8">
+
+   
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>        
+</head>
+<body>
+<div id="head"> Stories </div><br>
+
+<div id="outer">
+<div id="visualization"></div>
+</div>
+</body>
+</html>
+
+
+<style>
+    
+html,body{height:100%;
+width:100%;
+background-color:black;
+
+}
+
+#head{
+  margin-top: 3%;    
+  color:white;
+  font-family: monospace;
+  font-size:4em; 
+  text-align:center;
+
+}
+
+#outer{
+width:100%;  
+height:98%; 
+display:flex;
+align-items:center;
+justify-content:center;
+  
+}
+
+#visualization{
+ height:100%;
+ width:100%;
+}
+
+    
+    
+ 
+   .google-visualization-tooltip {
+        margin:0 !important;
+        width:30%;
+       
+        
+        padding: 2% !important;
+        color: white;
+        background-color: black;
+        border: 2px solid white;
+        //overflow: hidden;
+        position:absolute;
+       
+        }
+   
+  
+    
+    ul{
+        list-style-type: none;
+        margin: 0;
+        padding:0;
+    }
+    
+   
+  
+    
+    
+</style>
+
+<script type="text/javascript">
+    
+   
+    
+    
+    function info(img,data)
+        {
+          this.img=img;
+          this.data=data;
+        }
+    
+     function country(c,user){
+        this.c=c;
+        this.user=user;
+        }
+        
+        var story={};
+        
+        story={
+        us:new country('us',[
+            new info('src/us1.jpg',"I have always been very passionate about taking initiative as a leader and contributing to social causes. It is this passion and a firm belief that even a small group of thoughtful, committed individuals can change the world that led me to being the President of Social IQ. One of the biggest challenges has been to keep the club's services pro-bono. A lot of times our student consultants have brilliant ideas but certain research methods and ideas need money to be put into action. Nonetheless, we strive to come up with high impact, sustainable solutions for our clients. My vision is to establish a network of such clubs all around the US and to be able to raise money that will help us offer better services to local businesses."),
+            
+                          new info('src/us2.jpg',"The most significant challenges that I have encounter is to scale the club extremely quickly. It starts with one person and then grows to a 8 people founding team, and then to a 28 core member club, and then to become a signature club in the campus and organize a forum with 800 attendees. All done within three months. It's been a tough ride") ] ),
+                                   
+        in:new country('in',[new info('src/in1.jpg','My biggest challenge has been to generate enthusiasm for a branch of science that isn’t mainstream. Geophysics isn’t widely popular, and the academia is disconnected with the evolving industry. However, as a passionate student collective, we have had some meaningful initiatives that have kept us going. Best of all has been to collaborate with the local school children and introduce them to the seismic wonders; Break the stigma of incomprehensible science.'),
+            
+        new info('src/in2.jpg',"We organized a cultural business fest in my final semester. On one of the occasions, we had an event for cooking . One of the students decided to use chopsticks instead of spoons for his dish. He left the chopsticks dipped in the food. One of the judges refused to eat it ; he felt insulted, culturally. That incident left a deep impact in me, I started becoming culturally sensitive. What wasn't a big deal to me, would probably be one for someone else. I learned to respect that.")]),
+            
+        indo:new country('indo',[new info('src/indo1.jpg',"We come together as a team, as a family, with a like-minded goal, to create amazing events for everyone. Finding the right sponsors is the hardest part. It's an uphill battle from connecting to the right sponsor to getting them to sponsor.")])
+        };
+       
+  
+    
+google.load('visualization', '1.1', {packages: ['geochart'], callback: drawVisualization});
+
+    
+    
+ 
+function drawVisualization() {
+    var data = google.visualization.arrayToDataTable([
+        ['Country', 'Val',{role: 'tooltip', p:{html:true}}],
+        ['Indonesia',0,create('indo') ],
+        ['US',5, create('us')],
+        ['India',20,create('in')] ]);
+    
+    
+    
+    var chart = new google.visualization.GeoChart(document.getElementById('visualization'));
+    
+    var options = {
+        
+          region:'world',
+          colorAxis: {colors: ['#00853f', 'black', '#e31b23']},
+          backgroundColor: '#000',
+          datalessRegionColor: '#fff',
+          legend:'none',
+           tooltip: {
+            isHtml: true,
+            showTitle:false,
+            }
+        };
+        
+     chart.draw(data,options);}
+    
+        
+        
+       function create(c)
+       { 
+           var str='<div id="myCarousel" class="slide carousel" data-ride="carousel" data-interval="500" data-pause="false">';
+            var i;
+           
+          
+           
+            str+='<div class="carousel-inner" role="listbox">';
+          
+           switch(c)
+               { case "us":
+                 for(i=0;i<story.us.user.length;i++)       
+                 if(i===0)
+                 str+='<div class="active item"><img src="'+story.us.user[i].img
+                 +'"  ><br>'+story.us.user[i].data+
+                 '</div>';
+                 else
+                 str+='<div class="item"><img src="'+story.us.user[i].img
+                 +'"  ><br>'+story.us.user[i].data+
+                 '</div>';     
+                  break;
+                   
+                 case "in":
+                 for(i=0;i<story.in.user.length;i++)       
+                 if(i==0)
+                 str+='<div class="active item"><img src="'+story.in.user[i].img
+                 +'"  ><br>'+story.in.user[i].data+
+                 '</div>';
+                 else
+                 str+='<div class="item"><img src="'+story.in.user[i].img
+                 +'"  ><br>'+story.in.user[i].data+
+                 '</div>';     
+                  break;
+                       
+                 case "indo":
+                 for(i=0;i<story.indo.user.length;i++)       
+                 if(i==0)
+                 str+='<div class="item active"><img src="'+story.indo.user[i].img
+                 +'"  ><br>'+story.indo.user[i].data+
+                 '</div>';
+                 else
+                 str+='<div class="item"><img src="'+story.indo.user[i].img
+                 +'"  ><br>'+story.indo.user[i].data+
+                 '</div>';     
+                  break;
+                 }
+           
+             str+='</div></div>';
+               
+          
+              return str;
+       }
+    
+        
+   
+</script>
